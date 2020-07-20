@@ -130,10 +130,11 @@ class ViewController: UIViewController {
             nextButton.setTitle("Finish", for: .normal)
         }
         if row < data.count {
-            hideAnimation()
+            hideAnimation() // hide begins before loading
             loadData(selectedRow: row)
         } else {
             row = 0
+            nextButton.setTitle("Next", for: .normal)
         }
         
         
@@ -146,7 +147,7 @@ class ViewController: UIViewController {
         bodylbl.text = data[selectedRow]["body"]
         pageControl.currentPage = row
         row += 1
-        showAnimation()
+        showAnimation() //data load bhaye pachi
     }
     
     func showAnimation() {
@@ -155,14 +156,14 @@ class ViewController: UIViewController {
             self.titlelbl.transform = CGAffineTransform(translationX: self.view.frame.size.width, y: 0)
         }) { (_) in
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                //titlelabl is in its original location
+                //titlelabl is in its original location when transform is completed
                 self.titlelbl.alpha = 1
                 self.titlelbl.transform = CGAffineTransform(translationX: 0, y: 0)
             })
         }
         
         UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-            //animation location start from view width aka jaba complete huncha
+            //animation location start from view width
             self.bodylbl.transform = CGAffineTransform(translationX: self.view.frame.size.width, y: 0)
         }) { (_) in
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -176,6 +177,7 @@ class ViewController: UIViewController {
     func hideAnimation() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
             self.titlelbl.alpha = 0
+            self.bodylbl.alpha = 0
         })
     }
 }
